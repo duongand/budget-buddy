@@ -7,6 +7,11 @@ function ExpenseHeader(props) {
     };
 
     function handleSubmit(event) {
+        if (!props.formData.date) return;
+        else if (!props.formData.description) return;
+        else if (!props.formData.amount || isNaN(props.formData.amount)) return;
+        else if (!props.formData.location) return;
+
         event.preventDefault();
         props.onSubmit();
     };

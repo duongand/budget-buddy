@@ -12,7 +12,7 @@ function ExpenseTable(props) {
             <td>{expense.description}</td>
             <td>{expense.amount}</td>
             <td>{expense.location}</td>
-            <td><Button aria-label="Close" onClick={() => {
+            <td><Button variant="danger" aria-label="Close" onClick={() => {
                 removeExpense(expense.key)
             }}>&times;</Button></td>
         </tr>
