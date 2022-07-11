@@ -2,18 +2,18 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 
 function ExpenseTable(props) {
-    function removeExpense(rowDate, rowInformation) {
-        props.deleteExpense(rowDate, rowInformation);
+    function removeExpense(key) {
+        props.deleteExpense(key);
     };
 
     const expenseRows = props.addedExpenses.map(expense => (
-        <tr>
+        <tr key={expense.key}>
             <td>{expense.date}</td>
             <td>{expense.description}</td>
             <td>{expense.amount}</td>
             <td>{expense.location}</td>
             <td><Button aria-label="Close" onClick={() => {
-                removeExpense(expense.date, expense.location)
+                removeExpense(expense.key)
             }}>&times;</Button></td>
         </tr>
     ));

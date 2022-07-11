@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ExpenseHeader from "./components/ExpenseHeader";
 import ExpenseTable from "./components/ExpenseTable";
-import expenseData from "./expenseData";
 
 function App() {
 	const [formData, setFormData] = useState({
+		key: Math.random().toString(),
 		date: "",
 		description: "",
 		amount: "",
@@ -20,7 +20,9 @@ function App() {
 		}));
 	};
 
-	const [addedExpenses, setAddedExpenses] = useState([]);
+	const [addedExpenses, setAddedExpenses] = useState(() => {
+		return JSON.parse(window.localStorage.getItem('expense-items')) || []
+	});
 	function addExpense() {
 		setAddedExpenses(prevAddedExpenses => ([
 			...prevAddedExpenses,
@@ -28,18 +30,23 @@ function App() {
 		]));
 
 		setFormData({
+			key: Math.random().toString(),
 			date: "",
 			description: "",
 			amount: "",
 			location: "",
 		});
 	};
-
-	function removeExpense(date, location) {
+	
+	function removeExpense(key) {
 		setAddedExpenses(prevAddedExpenses => {
-			return prevAddedExpenses.filter(expense => expense.date !== date && expense.location !== location);
+			return prevAddedExpenses.filter(expense => expense.key !== key);
 		});
 	};
+
+	useEffect(() => {
+		window.localStorage.setItem('expense-items', JSON.stringify(addedExpenses));
+	}, [addedExpenses])
 
 	return (
 		<div className="content-wrap">

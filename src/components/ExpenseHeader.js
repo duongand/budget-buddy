@@ -9,7 +9,6 @@ function ExpenseHeader(props) {
     function handleSubmit(event) {
         event.preventDefault();
         props.onSubmit();
-        console.log('Expense submitted');
     };
 
     return (
