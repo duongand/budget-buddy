@@ -26,6 +26,10 @@ body {
     background-color: lightgray;
 }
 
+.header--title {
+    font-weight: bold;
+}
+
 .table-wrapper {
     height: calc(75vh - 100px);
     overflow: auto;

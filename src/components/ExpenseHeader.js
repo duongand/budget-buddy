@@ -9,7 +9,7 @@ function ExpenseHeader(props) {
     function handleSubmit(event) {
         event.preventDefault();
         props.onSubmit();
-        console.log('Form submitted');
+        console.log('Expense submitted');
     };
 
     return (
@@ -37,6 +37,9 @@ function ExpenseHeader(props) {
                                 value={props.formData.description}
                             />
                         </Form.Group>
+                    </Col>
+                    <Col xs lg="4">
+                        <h3 className="header--title">Budget Buddy</h3>
                     </Col>
                 </Row>
                 <Row>
