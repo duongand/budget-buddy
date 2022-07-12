@@ -1,24 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 
 function ExpenseHeader(props) {
+    const [validated, setValidated] = useState(false);
+
     function onChange(event) {
         props.onChange(event);
     };
 
     function handleSubmit(event) {
-        if (!props.formData.date) return;
-        else if (!props.formData.description) return;
-        else if (!props.formData.amount || isNaN(props.formData.amount)) return;
-        else if (!props.formData.location) return;
+        const form = event.currentTarget;
+        console.log(form);
 
+        if (form.checkValidity() === true) {
+            event.preventDefault();
+            props.onSubmit();
+        }
+        
         event.preventDefault();
-        props.onSubmit();
+        setValidated(true);
     };
 
     return (
         <header className="header-wrap">
-            <Form onSubmit={handleSubmit}>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row>
                     <Col xs lg="4">
                         <Form.Group controlId="formDate">
@@ -27,7 +32,9 @@ function ExpenseHeader(props) {
                                 type="date"
                                 name="date"
                                 onChange={onChange}
-                                value={props.formData.date}/>
+                                value={props.formData.date}
+                                required
+                            />
                         </Form.Group>
                     </Col>
                     <Col xs lg="4">
@@ -39,6 +46,7 @@ function ExpenseHeader(props) {
                                 name="description"
                                 onChange={onChange}
                                 value={props.formData.description}
+                                required
                             />
                         </Form.Group>
                     </Col>
@@ -55,7 +63,9 @@ function ExpenseHeader(props) {
                                 placeholder="Dollar Amount"
                                 name="amount"
                                 onChange={onChange}
-                                value={props.formData.amount}/>
+                                value={props.formData.amount}
+                                required    
+                            />
                         </Form.Group>
                     </Col>
                     <Col xs lg="4">
@@ -66,14 +76,16 @@ function ExpenseHeader(props) {
                                 placeholder="Location"
                                 name="location"
                                 onChange={onChange}
-                                value={props.formData.location}/>
+                                value={props.formData.location}
+                                required
+                            />
                         </Form.Group>
                     </Col>
                     <Col>
                         <Button
                             className="add-expense"
                             variant="primary"
-                            onClick={handleSubmit}
+                            type="submit"
                         >
                             Add Expense
                         </Button>

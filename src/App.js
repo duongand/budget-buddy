@@ -10,7 +10,6 @@ function App() {
 		amount: "",
 		location: "",
 	});
-
 	function updateFields(event) {
 		const { name, value } = event.target;
 
@@ -37,7 +36,7 @@ function App() {
 			location: "",
 		});
 	};
-	
+
 	function removeExpense(key) {
 		setAddedExpenses(prevAddedExpenses => {
 			return prevAddedExpenses.filter(expense => expense.key !== key);
