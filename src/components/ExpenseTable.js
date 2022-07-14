@@ -1,23 +1,8 @@
-import React from "react";
-import { Table, Button } from "react-bootstrap";
+import React from 'react';
+import Table from 'react-bootstrap/Table';
+import ExpenseRow from './ExpenseRow';
 
-function ExpenseTable(props) {
-    function removeExpense(key) {
-        props.deleteExpense(key);
-    };
-
-    const expenseRows = props.addedExpenses.map(expense => (
-        <tr key={expense.key}>
-            <td>{expense.date}</td>
-            <td>{expense.description}</td>
-            <td>{expense.amount}</td>
-            <td>{expense.location}</td>
-            <td><Button variant="danger" aria-label="Close" onClick={() => {
-                removeExpense(expense.key)
-            }}>&times;</Button></td>
-        </tr>
-    ));
-
+function ExpenseTable({ addedExpenses, deleteExpense }) {
     return (
         <div className="table-wrapper">
             <Table striped bordered hover className="expense-table">
@@ -31,11 +16,10 @@ function ExpenseTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {expenseRows}
+                    <ExpenseRow addedExpenses={addedExpenses} deleteExpense={deleteExpense} />
                 </tbody>
             </Table>
         </div>
-
     );
 };
 

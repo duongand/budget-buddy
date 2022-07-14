@@ -4,12 +4,15 @@ import ExpenseTable from "./components/ExpenseTable";
 
 function App() {
 	const [formData, setFormData] = useState({
-		key: Math.random().toString(),
 		date: "",
 		description: "",
 		amount: "",
 		location: "",
 	});
+	const [addedExpenses, setAddedExpenses] = useState(() => {
+		return JSON.parse(window.localStorage.getItem('expense-items')) || []
+	});
+
 	function updateFields(event) {
 		const { name, value } = event.target;
 
@@ -19,17 +22,18 @@ function App() {
 		}));
 	};
 
-	const [addedExpenses, setAddedExpenses] = useState(() => {
-		return JSON.parse(window.localStorage.getItem('expense-items')) || []
-	});
 	function addExpense() {
+		const newExpense = {
+			key: Math.random(),
+			...formData
+		};
+
 		setAddedExpenses(prevAddedExpenses => ([
 			...prevAddedExpenses,
-			formData
+			newExpense
 		]));
 
 		setFormData({
-			key: Math.random().toString(),
 			date: "",
 			description: "",
 			amount: "",
@@ -45,7 +49,7 @@ function App() {
 
 	useEffect(() => {
 		window.localStorage.setItem('expense-items', JSON.stringify(addedExpenses));
-	}, [addedExpenses])
+	}, [addedExpenses]);
 
 	return (
 		<div className="content-wrap">
@@ -54,7 +58,7 @@ function App() {
 				onChange={updateFields}
 				onSubmit={addExpense}
 			/>
-			{addedExpenses.length > 0 && <ExpenseTable addedExpenses={addedExpenses} deleteExpense={removeExpense} />}
+			{addedExpenses && <ExpenseTable addedExpenses={addedExpenses} deleteExpense={removeExpense} />}
 		</div>
 	);
 }
